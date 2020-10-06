@@ -15,6 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import Home from './component/Home'; 
 import Pokemons from './component/Pokemons';
 import Pokedex from './component/Pokedex';
+import Demo from './component/Demo';
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -63,6 +64,12 @@ export default function BasicExample() {
                 <Link to="/pokedex">Pokedex</Link>
               </Paper>
             </Grid>
+
+            <Grid item xs={6} sm={4}>
+              <Paper className={classes.paper}>
+                <Link to="/demo">Demo</Link>
+              </Paper>
+            </Grid>
         </Grid>
         
 
@@ -85,6 +92,9 @@ export default function BasicExample() {
           </Route>
           <Route path="/pokedex">
             <Pokedex />
+          </Route>
+          <Route path="/demo">
+            <Demo />
           </Route>
         </Switch>
         </Container>

@@ -5,12 +5,41 @@ import PokemonDataService from "../services/PokemonService";
 import Grid from "@material-ui/core/Grid";
 import axios from 'axios';
 
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+
+import { Carousel } from 'react-responsive-carousel';
+
+
+const useStyles = makeStyles({
+  root: {
+    //maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+  imagem:{
+    width: null
+  }
+
+});
+
 const filter = createFilterOptions();
 
 const Pokemons = () => {
     
+    const classes = useStyles();
     const [pokemons, setPokemons] = useState([]);
     const [pokemon, setPokemon] = useState([]);
+    const [habilidades, setHabilidades] = useState([]);
+    const [imagem, setImagens] = useState([]);
+    
     const [value, setValue] = React.useState(pokemons[0]);
 
     useEffect(() => {
@@ -26,24 +55,43 @@ const Pokemons = () => {
           console.log(e);
         });
     };
+
+    /*const content = imagens.posts.map((foto) =>
+        <div key={foto.id}>
+          <h3>{foto.title}</h3>
+          <p>{foto.content}</p>
+        </div>
+    );*/
     //console.log(pokemons);
   
     function Pokemon(pokemon) {
       console.log(pokemon);
       PokemonDataService.getPokemon(pokemon)
         .then(response => {
-          setPokemon(response.data.results);
+          setPokemon(pokemon);
+          setHabilidades(response.data.abilities);
+          setImagens(response.data.sprites.other.dream_world);
+          //setHabilidades(response.data);
           console.log(response.data);
+
+          
         })
         .catch(e => {
           console.log(e);
-        });
+        });  
+        
     }
 
+    console.log(habilidades);
+    console.log(imagem);
+
     return (
+      
       <Grid container item xs={12} spacing={6}>
-        <Grid item xs={6}>
+        <Grid item xs={8}>
           <p>{pokemons.length}</p>
+          <p>habilidades: {habilidades.length}</p>
+          <p>imagens: {imagem.length}</p>
           <div>{`value: ${value !== null ? `'${value}'` : 'null'}`}</div>
           <Autocomplete
             id="free-solo-demo"
@@ -59,7 +107,32 @@ const Pokemons = () => {
             )}
           />
         </Grid>
-        <Grid item xs={6}>
+
+
+        <Grid item xs={4}>
+          <Card className={classes.root}>
+          <CardActionArea>
+            
+            <img className={classes.imagem} src={imagem.front_default} />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+               {pokemon}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                across all continents except Antarctica
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+            <CardActions>
+              <Button size="small" color="primary">
+                Share
+              </Button>
+              <Button size="small" color="primary">
+                Learn More
+              </Button>
+            </CardActions>
+          </Card>
           
         </Grid>
 
