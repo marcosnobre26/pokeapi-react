@@ -14,6 +14,7 @@ import Paper from '@material-ui/core/Paper';
 
 import Home from './component/Home'; 
 import Pokemons from './component/Pokemons';
+import Pokemon from './component/Pokemon';
 import Pokedex from './component/Pokedex';
 import Demo from './component/Demo';
 
@@ -95,6 +96,9 @@ export default function BasicExample() {
           </Route>
           <Route path="/demo">
             <Demo />
+          </Route>
+          <Route path="/pokemon">
+            <Pokemon />
           </Route>
         </Switch>
         </Container>
